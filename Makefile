@@ -1,8 +1,8 @@
 P=ramutils
 OBJECTS=ram-str.o
 HEADERS=ram-err.h ram-str.h
-CFLAGS = -g -Wall -std=c11 -pedantic -O3 `pkg-config --cflags ramutils`
-LDLIBS = `pkg-config --cflags ramutils`
+CFLAGS = -g -Wall -std=c11 -pedantic -O3
+LDLIBS =
 DESTDIR=$(HOME)/opt
 
 # just for testing, move down afterwards
