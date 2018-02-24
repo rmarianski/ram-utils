@@ -9,7 +9,7 @@ int main() {
     ram_str rs = ram_make_str_walk_length(s);
     assert(rs.length == strlen(s));
 
-    unsigned int pos;
+    int pos;
     ram_str needle = ram_make_str_walk_length("hell");
     pos = ram_find_pos(&rs, &needle);
     assert(pos == 0);
@@ -20,7 +20,7 @@ int main() {
 
     needle = ram_make_str_walk_length("world");
     pos = ram_find_pos(&rs, &needle);
-    unsigned int exp_substr_pos = 6;
+    int exp_substr_pos = 6;
     assert(pos == exp_substr_pos);
     ram_str substr = ram_find_str(&rs, &needle);
     assert(s + exp_substr_pos == substr.string);

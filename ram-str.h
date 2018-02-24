@@ -8,7 +8,7 @@ typedef struct {
 
 ram_str ram_make_str(char *string, unsigned int length);
 ram_str ram_make_str_walk_length(char *string);
-unsigned int ram_find_pos(ram_str *haystack, ram_str *needle);
+int ram_find_pos(ram_str *haystack, ram_str *needle);
 ram_str ram_find_str(ram_str *haystack, ram_str *needle);
 
 #ifdef RAM_IMPLEMENTATION
@@ -30,8 +30,8 @@ ram_str ram_make_str_walk_length(char *string) {
     return result;
 }
 
-unsigned int ram_find_pos(ram_str *haystack, ram_str *needle) {
-    unsigned int pos = -1;
+int ram_find_pos(ram_str *haystack, ram_str *needle) {
+    int pos = -1;
     char *h = haystack->string;
     for (unsigned int i = 0; i < haystack->length; i++) {
         unsigned int check_pos = i;
@@ -52,7 +52,7 @@ unsigned int ram_find_pos(ram_str *haystack, ram_str *needle) {
 
 ram_str ram_find_str(ram_str *haystack, ram_str *needle) {
     ram_str result = {0};
-    unsigned int pos = ram_find_pos(haystack, needle);
+    int pos = ram_find_pos(haystack, needle);
     if (pos >= 0) {
         result.string = haystack->string + pos;
         result.length = haystack->length - pos;
