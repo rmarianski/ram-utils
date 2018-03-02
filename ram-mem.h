@@ -30,6 +30,8 @@ typedef struct {
 
 ram_arena ram_arena_mk(size_t size, void *memory);
 ram_arena ram_arena_mk_options(size_t size, void *memory, ram_arena_options options);
+void ram_arena_init(ram_arena *arena, size_t size, void *memory);
+void ram_arena_init_options(ram_arena *arena, size_t size, void *memory, ram_arena_options options);
 void *ram_arena_alloc(ram_arena *arena, size_t size);
 void *ram_arena_alloc_options(ram_arena *arena, size_t size, ram_arena_options_alloc options);
 ram_arena_snapshot ram_arena_begin_temporary_memory(ram_arena *arena);
@@ -41,19 +43,28 @@ ram_arena ram_arena_subarena(ram_arena *arena, size_t size);
 
 #ifdef RAM_IMPLEMENTATION
 
+void ram_arena_init_options(ram_arena *arena, size_t size, void *memory, ram_arena_options options) {
+    arena->addr = memory;
+    arena->used = 0;
+    arena->total = size;
+    arena->options = options;
+}
+
+void ram_arena_init(ram_arena *arena, size_t size, void *memory) {
+    ram_arena_options options = {0};
+    ram_arena_init_options(arena, size, memory, options);
+}
+
 ram_arena ram_arena_mk_options(size_t size, void *memory, ram_arena_options options) {
-    ram_arena result = {
-        .addr = memory,
-        .used = 0,
-        .total = size,
-        .options = options,
-    };
+    ram_arena result;
+    ram_arena_init_options(&result, size, memory, options);
     return result;
 }
 
 ram_arena ram_arena_mk(size_t size, void *memory) {
-    ram_arena_options options = {0};
-    return ram_arena_mk_options(size, memory, options);
+    ram_arena result;
+    ram_arena_init(&result, size, memory);
+    return result;
 }
 
 void *ram_arena_alloc_options(ram_arena *arena, size_t size, ram_arena_options_alloc options) {
