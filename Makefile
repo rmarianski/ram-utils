@@ -28,7 +28,6 @@ clean:
 install: all
 	cp -f $(HEADERS) $(DESTDIR)/include
 	cp -f lib$(P).so lib$(P).a $(DESTDIR)/lib
-	cp -f $(P).pc $(DESTDIR)/lib/pkgconfig
-	sed -i "s#HOME#$(HOME)#g" $(DESTDIR)/lib/pkgconfig/$(P).pc
+	sed "s#HOME#$(HOME)#g" $(P).pc > $(DESTDIR)/lib/pkgconfig/$(P).pc
 
 .-PHONY: check clean shared static install all
